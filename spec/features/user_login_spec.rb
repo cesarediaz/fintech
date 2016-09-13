@@ -30,4 +30,11 @@ RSpec.feature 'user use login', type: :feature do
       expect(page).to have_text('Invalid Email or password.')
     end
   end
+
+  scenario 'needs to login in', js: true do
+    visit '/'
+    within(:css, 'div.alert') do
+      expect(page).to have_text('You need to sign in or sign up before continuing.')
+    end
+  end
 end
