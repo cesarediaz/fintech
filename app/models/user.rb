@@ -5,13 +5,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   validate :strong_password
 
-  private
-
-  def weak_words
+  def self.weak_words
     %w(password mypassword)
   end
 
+  private
+
   def strong_password
-    errors.add(:password, 'too weak') if weak_words.include?(password)
+    errors.add(:password, 'too weak') if User.weak_words.include?(password)
   end
 end
