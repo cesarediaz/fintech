@@ -11,11 +11,13 @@ RSpec.feature 'user use login', type: :feature do
 
     click_button 'Log in'
 
-    expect(page).to have_text("Welcome #{user.email}")
+    within(:css, 'div.alert') do
+      expect(page).to have_text('Signed in successfully.')
+    end
   end
 
   scenario 'failure', js: true do
-    user = create(:user)
+    create(:user)
 
     visit(new_user_session_path)
 
@@ -24,7 +26,8 @@ RSpec.feature 'user use login', type: :feature do
 
     click_button 'Log in'
 
-    expect(page).not_to have_text('Sign out')
-    expect(page).to have_text('Please sign in')
+    within(:css, 'div.alert') do
+      expect(page).to have_text('Invalid Email or password.')
+    end
   end
 end
